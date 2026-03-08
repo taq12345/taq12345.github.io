@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Dynamic SIP Calculator">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e17"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="80" y="240" fill="#00e5a0" font-family="Arial, sans-serif" font-size="36" letter-spacing="2">SMART INVESTING TOOL</text>
+  <text x="80" y="330" fill="#e8edf5" font-family="Arial, sans-serif" font-size="72" font-weight="700">Dynamic SIP Calculator</text>
+  <text x="80" y="400" fill="#8fa3b8" font-family="Arial, sans-serif" font-size="34">Invest more on dips, less on rallies</text>
+</svg>
