@@ -15,14 +15,14 @@
 <meta property="og:url" content="https://taq12345.github.io/">
 <meta property="og:title" content="Dynamic SIP & DCA Calculator - Smart Investment Tool">
 <meta property="og:description" content="Invest more when markets dip, less when they peak. Free DCA & SIP calculator that intelligently scales your monthly investment based on market conditions.">
-<meta property="og:image" content="https://taq12345.github.io/og-image.png">
+<meta property="og:image" content="https://taq12345.github.io/og-image.svg">
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image">
 <meta property="twitter:url" content="https://taq12345.github.io/">
 <meta property="twitter:title" content="Dynamic SIP & DCA Calculator - Smart Investment Tool">
 <meta property="twitter:description" content="Invest more when markets dip, less when they peak. Free DCA & SIP calculator that intelligently scales your monthly investment based on market conditions.">
-<meta property="twitter:image" content="https://taq12345.github.io/og-image.png">
+<meta property="twitter:image" content="https://taq12345.github.io/og-image.svg">
 
 <!-- Theme Color -->
 <meta name="theme-color" content="#0a0e17">
@@ -583,14 +583,14 @@
   </header>
 
   <!-- Formula Box -->
-  <section class="formula-box" aria-label="Dynamic SIP Formula"></section>
+  <section class="formula-box" aria-label="Dynamic SIP Formula">
     <div class="formula-title">📐 The Formula</div>
     <div class="formula-main">
       Monthly SIP = <span class="var-base">Base SIP</span> × <span class="var-mult">Multiplier(d)</span>
     </div>
     <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px; line-height:1.7;">
       Where <span style="color:var(--accent-yellow)">Multiplier(d)</span> = 
-      <span style="color:var(--text-mid)">1 + (Sensitivity × d / 100)</span><br>
+      <span style="color:var(--text-mid)">1 - (Sensitivity × d / 100)</span><br>
       <span style="color:var(--accent-green)">d</span> = market deviation from reference point (negative = dip, positive = rally)<br>
       Capped between <span style="color:var(--accent-red)">0.5×</span> (extreme rally) and <span style="color:var(--accent-green)">2.5×</span> (deep crash)
     </div>
@@ -615,7 +615,7 @@
   </section>
 
   <!-- Inputs -->
-  <section class="inputs-grid" aria-label="Calculator Inputs"></section>
+  <section class="inputs-grid" aria-label="Calculator Inputs">
     <div class="input-group">
       <label class="input-label">Base Monthly SIP</label>
       <div class="input-row">
@@ -645,12 +645,12 @@
         <option value="ath">All-Time High</option>
         <option value="6m">6-Month Moving Avg</option>
       </select>
-      <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">Used to measure market deviation</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">Used to measure market deviation (affects multiplier calibration)</div>
     </div>
   </section>
 
   <!-- Result Panel -->
-  <section class="result-panel" aria-label="Calculation Results"></section>
+  <section class="result-panel" aria-label="Calculation Results">
     <div class="result-header">
       <div class="result-header-label">This Month's Recommended SIP</div>
       <div class="market-badge" id="marketBadge">— Neutral Market</div>
@@ -691,7 +691,7 @@
   </section>
 
   <!-- Tier Table -->
-  <section class="tier-section" aria-label="Market Scenario Breakdown"></section>
+  <section class="tier-section" aria-label="Market Scenario Breakdown">
     <div class="section-title">📊 Scenario Breakdown — Your Personalised Tier Map</div>
     <div class="tier-table">
       <div class="tier-row header">
@@ -818,11 +818,15 @@
     const base = parseFloat(document.getElementById('baseSip').value) || 10000;
     const dip = parseFloat(document.getElementById('marketDip').value);
     const sens = parseFloat(document.getElementById('sensitivity').value);
+    const refPoint = document.getElementById('refPoint').value;
 
-    const mult = calcMultiplier(dip, sens);
+    const refMultipliers = { '52w': 1.0, 'ath': 0.85, '6m': 1.15 };
+    const effectiveDip = dip * (refMultipliers[refPoint] || 1.0);
+
+    const mult = calcMultiplier(effectiveDip, sens);
     const recommended = base * mult;
     const extra = recommended - base;
-    const tier = getTierForDip(dip);
+    const tier = getTierForDip(effectiveDip);
 
     // Labels
     document.getElementById('dipLabel').textContent = (dip >= 0 ? '+' : '') + dip + '%';
@@ -861,7 +865,7 @@
     badge.style.background = badgeBg;
     badge.style.borderColor = badgeColor;
 
-    document.getElementById('multiplierDesc').textContent = tier.charAt(0).toUpperCase() + tier.slice(1);
+    document.getElementById('multiplierDesc').textContent = `${tier.charAt(0).toUpperCase() + tier.slice(1)} • ${refPoint.toUpperCase()}`;
 
     // Extra
     const extraEl = document.getElementById('extraSip');
@@ -888,12 +892,12 @@
 
     // Advice
     const adviceMap = {
-      crash: { color: '#ff4d6d', bg: 'rgba(255,77,109,0.08)', border: 'rgba(255,77,109,0.3)', label: '🚨 Market Crash Signal', text: `Market is down ${Math.abs(dip)}% — this is a strong buying opportunity. Deploy up to ${fmt(recommended)} this month. Stay calm, stick to the formula, and accumulate at low prices.` },
-      dip: { color: '#ff8c61', bg: 'rgba(255,140,97,0.08)', border: 'rgba(255,140,97,0.3)', label: '🔻 Dip Buying Zone', text: `A ${Math.abs(dip)}% pullback is meaningful. Increase your SIP to ${fmt(recommended)} to buy more units at a discount. This is the core benefit of dynamic SIP.` },
-      slight: { color: '#ffd166', bg: 'rgba(255,209,102,0.08)', border: 'rgba(255,209,102,0.3)', label: '📉 Minor Correction', text: `Small ${Math.abs(dip)}% dip detected. A moderate increase to ${fmt(recommended)} makes sense — you're buying slightly cheaper without overcommitting.` },
+      crash: { color: '#ff4d6d', bg: 'rgba(255,77,109,0.08)', border: 'rgba(255,77,109,0.3)', label: '🚨 Market Crash Signal', text: `Market is down ${Math.abs(effectiveDip).toFixed(1)}% — this is a strong buying opportunity. Deploy up to ${fmt(recommended)} this month. Stay calm, stick to the formula, and accumulate at low prices.` },
+      dip: { color: '#ff8c61', bg: 'rgba(255,140,97,0.08)', border: 'rgba(255,140,97,0.3)', label: '🔻 Dip Buying Zone', text: `A ${Math.abs(effectiveDip).toFixed(1)}% pullback is meaningful. Increase your SIP to ${fmt(recommended)} to buy more units at a discount. This is the core benefit of dynamic SIP.` },
+      slight: { color: '#ffd166', bg: 'rgba(255,209,102,0.08)', border: 'rgba(255,209,102,0.3)', label: '📉 Minor Correction', text: `Small ${Math.abs(effectiveDip).toFixed(1)}% dip detected. A moderate increase to ${fmt(recommended)} makes sense — you're buying slightly cheaper without overcommitting.` },
       neutral: { color: 'var(--accent-blue)', bg: 'rgba(77,166,255,0.08)', border: 'rgba(77,166,255,0.25)', label: '📊 Market at Average', text: `Market is flat. Stick to your base SIP of ${fmt(base)}. Consistency is the foundation of compounding.` },
-      rally: { color: 'var(--accent-green)', bg: 'rgba(0,229,160,0.06)', border: 'rgba(0,229,160,0.25)', label: '📈 Rally Mode', text: `Market is up ${dip}% — you're buying at a premium. Reduce SIP to ${fmt(recommended)} and preserve capital for the next dip.` },
-      peak: { color: '#a8f0d8', bg: 'rgba(168,240,216,0.05)', border: 'rgba(168,240,216,0.2)', label: '⚠️ Overheated Market', text: `Market is ${dip}% above average — historically risky to over-invest at peaks. Dial back to ${fmt(recommended)}, preserve the rest in liquid funds or cash to deploy when correction comes.` }
+      rally: { color: 'var(--accent-green)', bg: 'rgba(0,229,160,0.06)', border: 'rgba(0,229,160,0.25)', label: '📈 Rally Mode', text: `Market is up ${effectiveDip.toFixed(1)}% — you're buying at a premium. Reduce SIP to ${fmt(recommended)} and preserve capital for the next dip.` },
+      peak: { color: '#a8f0d8', bg: 'rgba(168,240,216,0.05)', border: 'rgba(168,240,216,0.2)', label: '⚠️ Overheated Market', text: `Market is ${effectiveDip.toFixed(1)}% above average — historically risky to over-invest at peaks. Dial back to ${fmt(recommended)}, preserve the rest in liquid funds or cash to deploy when correction comes.` }
     };
 
     const advice = adviceMap[tier];
@@ -916,7 +920,7 @@
     ];
 
     tiers.forEach(t => {
-      const m = calcMultiplier(t.dip, sens);
+      const m = calcMultiplier(t.dip * (refMultipliers[refPoint] || 1.0), sens);
       const s = base * m;
       document.getElementById(`t-${t.id}-mult`).textContent = m.toFixed(2) + '×';
       document.getElementById(`t-${t.id}-sip`).textContent = fmt(s);
