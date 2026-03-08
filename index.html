@@ -3,7 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dynamic SIP Calculator</title>
+<title>Dynamic SIP Calculator - DCA & Dollar Cost Averaging Tool</title>
+<meta name="description" content="Free Dynamic SIP & DCA Calculator that adjusts your monthly investment based on market conditions. Dollar Cost Averaging made smarter - invest more during dips, less during peaks.">
+<meta name="keywords" content="DCA calculator, dollar cost averaging, SIP calculator, dynamic SIP, systematic investment plan, DCA strategy, market timing, investment calculator, mutual fund calculator, smart investing, rupee cost averaging, value averaging, dynamic DCA">
+<meta name="author" content="Dynamic SIP Calculator">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://taq12345.github.io/">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://taq12345.github.io/">
+<meta property="og:title" content="Dynamic SIP & DCA Calculator - Smart Investment Tool">
+<meta property="og:description" content="Invest more when markets dip, less when they peak. Free DCA & SIP calculator that intelligently scales your monthly investment based on market conditions.">
+<meta property="og:image" content="https://taq12345.github.io/og-image.png">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://taq12345.github.io/">
+<meta property="twitter:title" content="Dynamic SIP & DCA Calculator - Smart Investment Tool">
+<meta property="twitter:description" content="Invest more when markets dip, less when they peak. Free DCA & SIP calculator that intelligently scales your monthly investment based on market conditions.">
+<meta property="twitter:image" content="https://taq12345.github.io/og-image.png">
+
+<!-- Theme Color -->
+<meta name="theme-color" content="#0a0e17">
+<meta name="msapplication-TileColor" content="#00e5a0">
+
+<!-- Structured Data / JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Dynamic SIP & DCA Calculator",
+  "description": "A smart investment calculator that adjusts SIP and DCA amounts based on market conditions using dollar cost averaging strategy",
+  "alternateName": ["Dynamic DCA Calculator", "Dollar Cost Averaging Calculator", "Smart SIP Calculator"],
+  "url": "https://taq12345.github.io/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Dynamic SIP calculation based on market conditions",
+    "Customizable sensitivity factor",
+    "Multiple reference point options",
+    "Real-time scenario breakdown",
+    "Investment intensity visualization"
+  ]
+}
+</script>
+
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -203,6 +253,7 @@
 
   input[type="range"] {
     -webkit-appearance: none;
+    appearance: none;
     height: 4px;
     background: var(--border);
     border-radius: 2px;
@@ -212,6 +263,7 @@
 
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
+    appearance: none;
     width: 16px;
     height: 16px;
     border-radius: 50%;
@@ -281,7 +333,9 @@
     .result-body { grid-template-columns: 1fr; }
   }
 
-  .result-stat { }
+  .result-stat {
+    display: block;
+  }
 
   .result-stat-label {
     font-size: 10px;
@@ -433,6 +487,60 @@
     color: var(--text-muted);
   }
 
+  /* Content Section */
+  .content-section {
+    margin-bottom: 48px;
+  }
+
+  .content-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+
+  .content-box h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    color: var(--text);
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  .content-box h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    color: var(--accent-green);
+    margin-top: 20px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .content-box p {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-mid);
+    margin-bottom: 14px;
+  }
+
+  .content-box ul {
+    margin-left: 20px;
+    margin-bottom: 14px;
+  }
+
+  .content-box li {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-mid);
+    margin-bottom: 8px;
+  }
+
+  .content-box strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
   /* Footer note */
   .disclaimer {
     font-size: 11px;
@@ -465,17 +573,17 @@
 </style>
 </head>
 <body>
-<div class="container">
+<main class="container">
 
   <!-- Header -->
-  <div class="header">
-    <div class="header-label">Smart Investing Tool</div>
+  <header class="header">
+    <div class="header-label">Smart Investing Tool • DCA & SIP</div>
     <h1>Dynamic <span>SIP</span> Calculator</h1>
-    <p class="header-sub">Invest more when markets dip, less when they peak. Let market conditions intelligently scale your monthly SIP contribution.</p>
-  </div>
+    <p class="header-sub">Invest more when markets dip, less when they peak. Let market conditions intelligently scale your monthly SIP/DCA contribution using smart dollar cost averaging.</p>
+  </header>
 
   <!-- Formula Box -->
-  <div class="formula-box">
+  <section class="formula-box" aria-label="Dynamic SIP Formula"></section>
     <div class="formula-title">📐 The Formula</div>
     <div class="formula-main">
       Monthly SIP = <span class="var-base">Base SIP</span> × <span class="var-mult">Multiplier(d)</span>
@@ -504,10 +612,10 @@
         <div class="formula-item-val">Controls how aggressively you respond to swings</div>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- Inputs -->
-  <div class="inputs-grid">
+  <section class="inputs-grid" aria-label="Calculator Inputs"></section>
     <div class="input-group">
       <label class="input-label">Base Monthly SIP</label>
       <div class="input-row">
@@ -539,10 +647,10 @@
       </select>
       <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">Used to measure market deviation</div>
     </div>
-  </div>
+  </section>
 
   <!-- Result Panel -->
-  <div class="result-panel">
+  <section class="result-panel" aria-label="Calculation Results"></section>
     <div class="result-header">
       <div class="result-header-label">This Month's Recommended SIP</div>
       <div class="market-badge" id="marketBadge">— Neutral Market</div>
@@ -580,10 +688,10 @@
         <span id="adviceText">Market is at average. Stick to your base SIP. No adjustment needed.</span>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- Tier Table -->
-  <div class="tier-section">
+  <section class="tier-section" aria-label="Market Scenario Breakdown"></section>
     <div class="section-title">📊 Scenario Breakdown — Your Personalised Tier Map</div>
     <div class="tier-table">
       <div class="tier-row header">
@@ -629,14 +737,65 @@
         <div class="tier-cell" id="t-peak-sip">—</div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="disclaimer">
+  <!-- Educational Content Section -->
+  <section class="content-section" aria-label="Educational Content">
+    <div class="content-box">
+      <h2>What is Dynamic SIP & DCA?</h2>
+      <p>A <strong>Dynamic SIP (Systematic Investment Plan)</strong> or <strong>Dynamic DCA (Dollar Cost Averaging)</strong> is an advanced investment strategy that adjusts your monthly contribution based on market conditions. Unlike traditional fixed SIP where you invest the same amount every month, dynamic SIP intelligently increases your investment during market dips and reduces it during market peaks.</p>
+      
+      <p>This approach combines the discipline of regular investing with the opportunity to capitalize on market volatility, potentially improving your long-term returns while maintaining a systematic approach.</p>
+
+      <h3>How Does Dynamic Dollar Cost Averaging Work?</h3>
+      <p>The dynamic DCA strategy uses a simple yet powerful formula:</p>
+      <ul>
+        <li><strong>Market Dip (-20% to -50%):</strong> Invest 1.5× to 2.5× your base amount to buy more units at lower prices</li>
+        <li><strong>Normal Market (-5% to +5%):</strong> Invest your standard base amount consistently</li>
+        <li><strong>Market Rally (+20% to +50%):</strong> Reduce to 0.5× to 0.8× your base amount to preserve capital</li>
+      </ul>
+
+      <h3>Benefits of Dynamic SIP Calculator</h3>
+      <ul>
+        <li><strong>Better Average Cost:</strong> Buy more units when prices are low, fewer when prices are high</li>
+        <li><strong>Disciplined Approach:</strong> Removes emotional decision-making with a formula-based strategy</li>
+        <li><strong>Market Timing Without Guessing:</strong> Systematic response to market conditions without trying to predict the future</li>
+        <li><strong>Flexibility:</strong> Adjust sensitivity based on your risk appetite and financial capacity</li>
+        <li><strong>Long-term Wealth Creation:</strong> Optimizes rupee cost averaging for better compounding</li>
+      </ul>
+
+      <h3>Who Should Use Dynamic DCA?</h3>
+      <p>Dynamic dollar cost averaging is ideal for:</p>
+      <ul>
+        <li>Long-term investors with 5+ year investment horizon</li>
+        <li>Investors who can adjust monthly contributions based on market conditions</li>
+        <li>Those who want to optimize traditional SIP returns</li>
+        <li>Disciplined investors looking for a systematic market-responsive strategy</li>
+        <li>Mutual fund and index fund investors seeking better entry points</li>
+      </ul>
+
+      <h3>Dynamic SIP vs Traditional SIP</h3>
+      <p><strong>Traditional SIP:</strong> Fixed amount every month regardless of market conditions. Simple but doesn't take advantage of market volatility.</p>
+      <p><strong>Dynamic SIP:</strong> Variable amount based on market deviation. More complex but potentially higher returns by buying more during dips and less during peaks.</p>
+
+      <h3>How to Use This Calculator</h3>
+      <p>1. Set your <strong>Base Monthly SIP</strong> - the amount you'd normally invest</p>
+      <p>2. Adjust <strong>Market Condition</strong> slider to reflect current market deviation from your reference point</p>
+      <p>3. Choose your <strong>Sensitivity Factor</strong> - higher means more aggressive response to market swings</p>
+      <p>4. Select a <strong>Reference Point</strong> (52-week average, all-time high, or 6-month average)</p>
+      <p>5. Review the recommended SIP amount and adjust your investment accordingly</p>
+
+      <h3>Important Considerations</h3>
+      <p>While dynamic SIP can enhance returns, remember that it requires discipline and the financial flexibility to increase investments during market downturns. Always ensure you have an emergency fund and don't invest money you'll need in the short term. This strategy works best with equity mutual funds, index funds, and ETFs over long investment horizons.</p>
+    </div>
+  </section>
+
+  <footer class="disclaimer">
     This tool is for educational purposes only and does not constitute financial advice.<br>
     Dynamic SIP works best as part of a long-term, disciplined investing strategy. Past market patterns don't guarantee future results.
-  </div>
+  </footer>
 
-</div>
+</main>
 
 <script>
   const fmt = v => 'PKR ' + Math.round(v).toLocaleString('en-PK');
