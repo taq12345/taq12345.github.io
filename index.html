@@ -264,6 +264,22 @@
     width: 100%;
   }
 
+  .styled-select {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .styled-select option {
+    background: var(--surface2);
+    color: var(--text);
+  }
+
   input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
@@ -599,7 +615,7 @@
   <section class="inputs-grid" aria-label="Calculator Inputs">
     <div class="input-group">
       <label class="input-label">Currency</label>
-      <select id="currency" style="background:transparent;border:none;outline:none;color:var(--text);font-family:'DM Mono',monospace;font-size:15px;width:100%;cursor:pointer;">
+      <select id="currency" class="styled-select">
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
         <option value="GBP">GBP</option>
@@ -634,7 +650,7 @@
 
     <div class="input-group">
       <label class="input-label">Reference Point</label>
-      <select id="refPoint" style="background:transparent;border:none;outline:none;color:var(--text);font-family:'DM Mono',monospace;font-size:15px;width:100%;cursor:pointer;">
+      <select id="refPoint" class="styled-select">
         <option value="52w">52-Week Average</option>
         <option value="ath">All-Time High</option>
         <option value="6m">6-Month Moving Avg</option>
