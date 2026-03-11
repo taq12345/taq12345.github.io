@@ -595,45 +595,26 @@
     <p class="header-sub">Invest more when markets dip, less when they peak. Let market conditions intelligently scale your monthly SIP/DCA contribution using smart dollar cost averaging.</p>
   </header>
 
-  <!-- Formula Box -->
-  <section class="formula-box" aria-label="Dynamic SIP Formula">
-    <div class="formula-title">📐 The Formula</div>
-    <div class="formula-main">
-      Monthly SIP = <span class="var-base">Base SIP</span> × <span class="var-mult">Multiplier(d)</span>
-    </div>
-    <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px; line-height:1.7;">
-      Where <span style="color:var(--accent-yellow)">Multiplier(d)</span> = 
-      <span style="color:var(--text-mid)">1 - (Sensitivity × d / 100)</span><br>
-      <span style="color:var(--accent-green)">d</span> = market deviation from reference point (negative = dip, positive = rally)<br>
-      Capped between <span style="color:var(--accent-red)">0.5×</span> (extreme rally) and <span style="color:var(--accent-green)">2.5×</span> (deep crash)
-    </div>
-    <div class="formula-grid">
-      <div class="formula-item">
-        <div class="formula-item-label">When market -20%</div>
-        <div class="formula-item-val">Multiplier rises → invest more</div>
-      </div>
-      <div class="formula-item">
-        <div class="formula-item-label">When market flat (0%)</div>
-        <div class="formula-item-val">Multiplier = 1.0 → base SIP</div>
-      </div>
-      <div class="formula-item">
-        <div class="formula-item-label">When market +20%</div>
-        <div class="formula-item-val">Multiplier drops → invest less</div>
-      </div>
-      <div class="formula-item">
-        <div class="formula-item-label">Sensitivity knob</div>
-        <div class="formula-item-val">Controls how aggressively you respond to swings</div>
-      </div>
-    </div>
-  </section>
-
   <!-- Inputs -->
   <section class="inputs-grid" aria-label="Calculator Inputs">
     <div class="input-group">
+      <label class="input-label">Currency</label>
+      <select id="currency" style="background:transparent;border:none;outline:none;color:var(--text);font-family:'DM Mono',monospace;font-size:15px;width:100%;cursor:pointer;">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="INR">INR</option>
+        <option value="PKR">PKR</option>
+        <option value="CAD">CAD</option>
+        <option value="AUD">AUD</option>
+      </select>
+    </div>
+
+    <div class="input-group">
       <label class="input-label">Base Monthly SIP</label>
       <div class="input-row">
-        <span class="input-prefix">PKR</span>
-        <input type="number" id="baseSip" value="10000" min="500" step="500">
+        <span class="input-prefix" id="currencyPrefix">USD</span>
+        <input type="number" id="baseSip" value="1000" min="100" step="100">
       </div>
     </div>
 
@@ -671,7 +652,7 @@
     <div class="result-body">
       <div class="result-stat">
         <div class="result-stat-label">Recommended SIP</div>
-        <div class="result-stat-value" id="recommendedSip" style="color: var(--accent-green)">PKR 10,000</div>
+        <div class="result-stat-value" id="recommendedSip" style="color: var(--accent-green)">$1,000</div>
         <div class="result-stat-sub" id="sipDiff">Same as base</div>
       </div>
       <div class="multiplier-display">
@@ -681,8 +662,8 @@
       </div>
       <div class="result-stat">
         <div class="result-stat-label">Extra / Saved vs Base</div>
-        <div class="result-stat-value" id="extraSip">PKR 0</div>
-        <div class="result-stat-sub" id="annualImpact">Annually: PKR 0</div>
+        <div class="result-stat-value" id="extraSip">$0</div>
+        <div class="result-stat-sub" id="annualImpact">Annually: $0</div>
       </div>
     </div>
 
@@ -752,6 +733,38 @@
     </div>
   </section>
 
+  <!-- Formula Box -->
+  <section class="formula-box" aria-label="Dynamic SIP Formula">
+    <div class="formula-title">📐 The Formula</div>
+    <div class="formula-main">
+      Monthly SIP = <span class="var-base">Base SIP</span> × <span class="var-mult">Multiplier(d)</span>
+    </div>
+    <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px; line-height:1.7;">
+      Where <span style="color:var(--accent-yellow)">Multiplier(d)</span> = 
+      <span style="color:var(--text-mid)">1 - (Sensitivity × d / 100)</span><br>
+      <span style="color:var(--accent-green)">d</span> = market deviation from reference point (negative = dip, positive = rally)<br>
+      Capped between <span style="color:var(--accent-red)">0.5×</span> (extreme rally) and <span style="color:var(--accent-green)">2.5×</span> (deep crash)
+    </div>
+    <div class="formula-grid">
+      <div class="formula-item">
+        <div class="formula-item-label">When market -20%</div>
+        <div class="formula-item-val">Multiplier rises → invest more</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-item-label">When market flat (0%)</div>
+        <div class="formula-item-val">Multiplier = 1.0 → base SIP</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-item-label">When market +20%</div>
+        <div class="formula-item-val">Multiplier drops → invest less</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-item-label">Sensitivity knob</div>
+        <div class="formula-item-val">Controls how aggressively you respond to swings</div>
+      </div>
+    </div>
+  </section>
+
   <!-- Educational Content Section -->
   <section class="content-section" aria-label="Educational Content">
     <div class="content-box">
@@ -811,7 +824,42 @@
 </main>
 
 <script>
-  const fmt = v => 'PKR ' + Math.round(v).toLocaleString('en-PK');
+  const currencyConfig = {
+    USD: { locale: 'en-US', defaultBase: 1000, min: 100, step: 100 },
+    EUR: { locale: 'de-DE', defaultBase: 900, min: 100, step: 100 },
+    GBP: { locale: 'en-GB', defaultBase: 800, min: 100, step: 100 },
+    INR: { locale: 'en-IN', defaultBase: 83000, min: 5000, step: 1000 },
+    PKR: { locale: 'en-PK', defaultBase: 280000, min: 10000, step: 5000 },
+    CAD: { locale: 'en-CA', defaultBase: 1400, min: 100, step: 100 },
+    AUD: { locale: 'en-AU', defaultBase: 1500, min: 100, step: 100 }
+  };
+
+  function getSelectedCurrency() {
+    return document.getElementById('currency').value;
+  }
+
+  function fmt(v, currency = getSelectedCurrency()) {
+    const locale = currencyConfig[currency]?.locale || 'en-US';
+    return new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency,
+      maximumFractionDigits: 0
+    }).format(Math.round(v));
+  }
+
+  function applyCurrencyDefaults(resetBase = true) {
+    const currency = getSelectedCurrency();
+    const cfg = currencyConfig[currency] || currencyConfig.USD;
+    const baseInput = document.getElementById('baseSip');
+
+    document.getElementById('currencyPrefix').textContent = currency;
+    baseInput.min = cfg.min;
+    baseInput.step = cfg.step;
+
+    if (resetBase) {
+      baseInput.value = cfg.defaultBase;
+    }
+  }
 
   function calcMultiplier(dip, sensitivity) {
     const raw = 1 + (sensitivity * (-dip) / 100);
@@ -828,7 +876,9 @@
   }
 
   function update() {
-    const base = parseFloat(document.getElementById('baseSip').value) || 10000;
+    const currency = getSelectedCurrency();
+    const defaultBase = currencyConfig[currency]?.defaultBase || currencyConfig.USD.defaultBase;
+    const base = parseFloat(document.getElementById('baseSip').value) || defaultBase;
     const dip = parseFloat(document.getElementById('marketDip').value);
     const sens = parseFloat(document.getElementById('sensitivity').value);
     const refPoint = document.getElementById('refPoint').value;
@@ -883,7 +933,7 @@
     // Extra
     const extraEl = document.getElementById('extraSip');
     if (Math.abs(extra) < 1) {
-      extraEl.textContent = 'PKR 0';
+      extraEl.textContent = fmt(0, currency);
       extraEl.style.color = 'var(--text-muted)';
       document.getElementById('sipDiff').textContent = 'Same as base SIP';
     } else if (extra > 0) {
@@ -949,7 +999,12 @@
   document.getElementById('marketDip').addEventListener('input', update);
   document.getElementById('sensitivity').addEventListener('input', update);
   document.getElementById('refPoint').addEventListener('change', update);
+  document.getElementById('currency').addEventListener('change', () => {
+    applyCurrencyDefaults(true);
+    update();
+  });
 
+  applyCurrencyDefaults(true);
   update();
 </script>
 </body>
