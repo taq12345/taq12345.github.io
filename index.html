@@ -684,6 +684,38 @@
     </div>
   </section>
 
+  <!-- Formula Box -->
+  <section class="formula-box" aria-label="Dynamic SIP Formula">
+    <div class="formula-title">📐 The Formula</div>
+    <div class="formula-main">
+      Monthly SIP = <span class="var-base">Base SIP</span> × <span class="var-mult">Multiplier(d)</span>
+    </div>
+    <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px; line-height:1.7;">
+      Where <span style="color:var(--accent-yellow)">Multiplier(d)</span> = 
+      <span style="color:var(--text-mid)">1 - (Sensitivity × d / 100)</span><br>
+      <span style="color:var(--accent-green)">d</span> = market deviation from reference point (negative = dip, positive = rally)<br>
+      Capped between <span style="color:var(--accent-red)">0.5×</span> (extreme rally) and <span style="color:var(--accent-green)">2.5×</span> (deep crash)
+    </div>
+    <div class="formula-grid">
+      <div class="formula-item">
+        <div class="formula-item-label">When market -20%</div>
+        <div class="formula-item-val">Multiplier rises → invest more</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-item-label">When market flat (0%)</div>
+        <div class="formula-item-val">Multiplier = 1.0 → base SIP</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-item-label">When market +20%</div>
+        <div class="formula-item-val">Multiplier drops → invest less</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-item-label">Sensitivity knob</div>
+        <div class="formula-item-val">Controls how aggressively you respond to swings</div>
+      </div>
+    </div>
+  </section>
+
   <!-- Tier Table -->
   <section class="tier-section" aria-label="Market Scenario Breakdown">
     <div class="section-title">📊 Scenario Breakdown — Your Personalised Tier Map</div>
