@@ -595,45 +595,13 @@
     <p class="header-sub">Invest more when markets dip, less when they peak. Let market conditions intelligently scale your monthly SIP/DCA contribution using smart dollar cost averaging.</p>
   </header>
 
-  <!-- Formula Box -->
-  <section class="formula-box" aria-label="Dynamic SIP Formula">
-    <div class="formula-title">📐 The Formula</div>
-    <div class="formula-main">
-      Monthly SIP = <span class="var-base">Base SIP</span> × <span class="var-mult">Multiplier(d)</span>
-    </div>
-    <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px; line-height:1.7;">
-      Where <span style="color:var(--accent-yellow)">Multiplier(d)</span> = 
-      <span style="color:var(--text-mid)">1 - (Sensitivity × d / 100)</span><br>
-      <span style="color:var(--accent-green)">d</span> = market deviation from reference point (negative = dip, positive = rally)<br>
-      Capped between <span style="color:var(--accent-red)">0.5×</span> (extreme rally) and <span style="color:var(--accent-green)">2.5×</span> (deep crash)
-    </div>
-    <div class="formula-grid">
-      <div class="formula-item">
-        <div class="formula-item-label">When market -20%</div>
-        <div class="formula-item-val">Multiplier rises → invest more</div>
-      </div>
-      <div class="formula-item">
-        <div class="formula-item-label">When market flat (0%)</div>
-        <div class="formula-item-val">Multiplier = 1.0 → base SIP</div>
-      </div>
-      <div class="formula-item">
-        <div class="formula-item-label">When market +20%</div>
-        <div class="formula-item-val">Multiplier drops → invest less</div>
-      </div>
-      <div class="formula-item">
-        <div class="formula-item-label">Sensitivity knob</div>
-        <div class="formula-item-val">Controls how aggressively you respond to swings</div>
-      </div>
-    </div>
-  </section>
-
   <!-- Inputs -->
   <section class="inputs-grid" aria-label="Calculator Inputs">
     <div class="input-group">
       <label class="input-label">Base Monthly SIP</label>
       <div class="input-row">
-        <span class="input-prefix">PKR</span>
-        <input type="number" id="baseSip" value="10000" min="500" step="500">
+        <span class="input-prefix">USD</span>
+        <input type="number" id="baseSip" value="1000" min="100" step="100">
       </div>
     </div>
 
@@ -671,7 +639,7 @@
     <div class="result-body">
       <div class="result-stat">
         <div class="result-stat-label">Recommended SIP</div>
-        <div class="result-stat-value" id="recommendedSip" style="color: var(--accent-green)">PKR 10,000</div>
+        <div class="result-stat-value" id="recommendedSip" style="color: var(--accent-green)">USD 1,000</div>
         <div class="result-stat-sub" id="sipDiff">Same as base</div>
       </div>
       <div class="multiplier-display">
@@ -681,8 +649,8 @@
       </div>
       <div class="result-stat">
         <div class="result-stat-label">Extra / Saved vs Base</div>
-        <div class="result-stat-value" id="extraSip">PKR 0</div>
-        <div class="result-stat-sub" id="annualImpact">Annually: PKR 0</div>
+        <div class="result-stat-value" id="extraSip">USD 0</div>
+        <div class="result-stat-sub" id="annualImpact">Annually: USD 0</div>
       </div>
     </div>
 
@@ -699,6 +667,38 @@
       <div class="advice-banner" id="adviceBanner">
         <strong>💡 Market Signal</strong>
         <span id="adviceText">Market is at average. Stick to your base SIP. No adjustment needed.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Formula Box -->
+  <section class="formula-box" aria-label="Dynamic SIP Formula">
+    <div class="formula-title">📐 The Formula</div>
+    <div class="formula-main">
+      Monthly SIP = <span class="var-base">Base SIP</span> × <span class="var-mult">Multiplier(d)</span>
+    </div>
+    <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px; line-height:1.7;">
+      Where <span style="color:var(--accent-yellow)">Multiplier(d)</span> = 
+      <span style="color:var(--text-mid)">1 - (Sensitivity × d / 100)</span><br>
+      <span style="color:var(--accent-green)">d</span> = market deviation from reference point (negative = dip, positive = rally)<br>
+      Capped between <span style="color:var(--accent-red)">0.5×</span> (extreme rally) and <span style="color:var(--accent-green)">2.5×</span> (deep crash)
+    </div>
+    <div class="formula-grid">
+      <div class="formula-item">
+        <div class="formula-item-label">When market -20%</div>
+        <div class="formula-item-val">Multiplier rises → invest more</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-item-label">When market flat (0%)</div>
+        <div class="formula-item-val">Multiplier = 1.0 → base SIP</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-item-label">When market +20%</div>
+        <div class="formula-item-val">Multiplier drops → invest less</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-item-label">Sensitivity knob</div>
+        <div class="formula-item-val">Controls how aggressively you respond to swings</div>
       </div>
     </div>
   </section>
@@ -811,7 +811,7 @@
 </main>
 
 <script>
-  const fmt = v => 'PKR ' + Math.round(v).toLocaleString('en-PK');
+  const fmt = v => 'USD ' + Math.round(v).toLocaleString('en-US');
 
   function calcMultiplier(dip, sensitivity) {
     const raw = 1 + (sensitivity * (-dip) / 100);
@@ -828,7 +828,7 @@
   }
 
   function update() {
-    const base = parseFloat(document.getElementById('baseSip').value) || 10000;
+    const base = parseFloat(document.getElementById('baseSip').value) || 1000;
     const dip = parseFloat(document.getElementById('marketDip').value);
     const sens = parseFloat(document.getElementById('sensitivity').value);
     const refPoint = document.getElementById('refPoint').value;
@@ -883,7 +883,7 @@
     // Extra
     const extraEl = document.getElementById('extraSip');
     if (Math.abs(extra) < 1) {
-      extraEl.textContent = 'PKR 0';
+      extraEl.textContent = 'USD 0';
       extraEl.style.color = 'var(--text-muted)';
       document.getElementById('sipDiff').textContent = 'Same as base SIP';
     } else if (extra > 0) {
