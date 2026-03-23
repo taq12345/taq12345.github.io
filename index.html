@@ -580,6 +580,46 @@
     text-align: center;
   }
 
+  .support-cta {
+    margin: 0 0 28px;
+    text-align: center;
+  }
+
+  .support-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #ff4d6d 0%, #ff7f50 100%);
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    box-shadow: 0 10px 22px rgba(255, 77, 109, 0.25);
+  }
+
+  .support-btn::before {
+    content: "❤";
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  .support-btn:hover,
+  .support-btn:focus-visible {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 14px 28px rgba(255, 77, 109, 0.34);
+  }
+
+  .support-btn:focus-visible {
+    outline: 2px solid rgba(255, 209, 102, 0.9);
+    outline-offset: 3px;
+  }
+
   /* Animations */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
@@ -832,6 +872,17 @@
       <p>While dynamic SIP can enhance returns, remember that it requires discipline and the financial flexibility to increase investments during market downturns. Always ensure you have an emergency fund and don't invest money you'll need in the short term. This strategy works best with equity mutual funds, index funds, and ETFs over long investment horizons.</p>
     </div>
   </section>
+
+  <div class="support-cta">
+    <a
+      class="support-btn"
+      href="https://www.patreon.com/cw/talhaqureshi/membership"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Consider supporting :)
+    </a>
+  </div>
 
   <footer class="disclaimer">
     This tool is for educational purposes only and does not constitute financial advice.<br>
