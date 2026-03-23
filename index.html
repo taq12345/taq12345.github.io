@@ -580,6 +580,46 @@
     text-align: center;
   }
 
+  .support-cta {
+    margin: 24px 0 28px;
+    text-align: center;
+  }
+
+  .support-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #ff4d6d 0%, #ff7f50 100%);
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    box-shadow: 0 10px 22px rgba(255, 77, 109, 0.25);
+  }
+
+  .support-btn::before {
+    content: "❤";
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  .support-btn:hover,
+  .support-btn:focus-visible {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 14px 28px rgba(255, 77, 109, 0.34);
+  }
+
+  .support-btn:focus-visible {
+    outline: 2px solid rgba(255, 209, 102, 0.9);
+    outline-offset: 3px;
+  }
+
   /* Animations */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
@@ -609,6 +649,16 @@
     <div class="header-label">Smart Investing Tool • DCA & SIP</div>
     <h1>Dynamic <span>SIP</span> Calculator</h1>
     <p class="header-sub">Invest more when markets dip, less when they peak. Let market conditions intelligently scale your monthly SIP/DCA contribution using smart dollar cost averaging.</p>
+    <div class="support-cta">
+      <a
+        class="support-btn"
+        href="https://www.patreon.com/cw/talhaqureshi/membership"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Consider supporting :)
+      </a>
+    </div>
   </header>
 
   <!-- Inputs -->
